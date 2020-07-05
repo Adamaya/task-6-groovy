@@ -47,7 +47,7 @@ job('job1_pull_repo_build_image') {
                     url("adamayasharma")
                     credentialsId("3f885629-0783-4229-8808-f2610c781c80")
                   }
-                cloud("Local")
+                cloud("docker")
     
               tagsString("adamayasharma/-gapache-webserver")
               pushCredentialsId("3f885629-0783-4229-8808-f2610c781c80")
