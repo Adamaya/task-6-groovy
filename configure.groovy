@@ -1,16 +1,63 @@
-job('job-dsl-plugin') {
-  steps{    
-  scm {
+job('example-1') {
+    steps {
+      scm {
         git {
           remote {
-            url('https://github.com/jenkinsci/job-dsl-plugin.git')
+            url('https://github.com/Adamaya/pipeline_implementation_with_k8s_-_jenkins.git')
           }
           branch('*/master')
         }
       }
-  triggers {
+      triggers {
         scm('* * * * *')
+      }
+      conditionalSteps {
+            condition {
+                shell("count=\$(ls | grep .php | wc -l); if [[ \$count -gt 0 ]]; then cp -vr * /home/php exit 0;else  exit 1; fi")
+            }
+            runner('DontRun')
+            steps {
+                dockerBuilderPublisher {
+                  dockerFileDirectory("/home/php")
+                  fromRegistry {
+                    url("adamayasharma")
+                    credentialsId("3f885629-0783-4229-8808-f2610c781c80")
+                  }
+                cloud("Local")
+    
+                tagsString("adamayasharma/-gphp-webserver")
+                pushCredentialsId("3f885629-0783-4229-8808-f2610c781c80")
+                pushOnSuccess(true)
+                cleanImages(false)
+                cleanupWithJenkinsJobDelete(false)
+                noCache(false)
+                pull(true)
+                }    
+            }
+        }
+      conditionalSteps {
+            condition {
+                shell("count=\$(ls | grep .php | wc -l); if [[ \$count -gt 0 ]]; then cp -vr * /home/php exit 0;else  exit 1; fi")
+            }
+            runner('DontRun')
+            steps {
+                dockerBuilderPublisher {
+                  dockerFileDirectory("/home/http")
+                  fromRegistry {
+                    url("adamayasharma")
+                    credentialsId("3f885629-0783-4229-8808-f2610c781c80")
+                  }
+                cloud("Local")
+    
+              tagsString("adamayasharma/-gapache-webserver")
+              pushCredentialsId("3f885629-0783-4229-8808-f2610c781c80")
+              pushOnSuccess(true)
+              cleanImages(false)
+              cleanupWithJenkinsJobDelete(false)
+              noCache(false)
+              pull(true)
+              }    
+            }
+        }
     }
-  }
- 
 }
