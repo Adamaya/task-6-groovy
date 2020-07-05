@@ -77,6 +77,9 @@ job('job3_test_web_app'){
 	  upstream("job2_deploy_on_k8s","SUCCESS")
     }
     shell('sleep 5;status=\$(curl -o /dev/null -s -w "%{http_code}" 192.168.99.102:30600); if [[ \$status == 200 ]]; then echo "web application working" ;else echo "web application is not working";fi')
+    publishers {
+        mailer('mail.adamyas@gmail.com', true, true)
+    }
   }
 }
 
