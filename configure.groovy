@@ -97,7 +97,8 @@ job('job4_redeploy'){
             runner('DontRun')
             steps {
 		    downstreamParameterized {
-  	  	  trigger("Code_Interpreter")
+  	  	  trigger("job1_pull_repo_build_image")
     			}
                   }
+	}
 }
