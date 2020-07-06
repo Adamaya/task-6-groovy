@@ -92,13 +92,13 @@ job('job4_redeploy'){
   }
   
   
-  publishers {
-    postBuildScripts {
-      steps {
-        downstreamParameterized {
-  	  	  trigger("job1_pull_repo_build_image")
+ publishers {
+        postBuildScripts {
+            steps {
+                shell('echo Hello World')
+            }
+            onlyIfBuildSucceeds(false)
+            onlyIfBuildFails()
         }
-      }
     }
-  }
 }
