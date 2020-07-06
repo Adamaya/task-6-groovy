@@ -92,7 +92,7 @@ job('job4_redeploy'){
   }
   conditionalSteps {
             condition {
-                shell("status=\$(curl -o /dev/null -s -w "%{http_code}" 192.168.99.102:30600); if [[ \$status == 200 ]]; then exit 1 ;else exit 0;fi")
+                shell('status=\$(curl -o /dev/null -s -w "%{http_code}" 192.168.99.102:30600); if [[ \$status == 200 ]]; then exit 1 ;else exit 0;fi')
             }
             runner('DontRun')
             steps {
