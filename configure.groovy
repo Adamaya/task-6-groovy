@@ -23,7 +23,7 @@ job('job1_pull_repo_build_image') {
                     url("adamayasharma")
                     credentialsId("3f885629-0783-4229-8808-f2610c781c80")
                   }
-                cloud("Local")
+                cloud("docker")
     
                 tagsString("adamayasharma/-gphp-webserver")
                 pushCredentialsId("3f885629-0783-4229-8808-f2610c781c80")
@@ -84,21 +84,23 @@ job('job3_test_web_app'){
 }
 
 job('job4_redeploy'){
-	triggers {
+  steps{
+  triggers {
     upstream {
       upstreamProjects("job3_test_web_app")
       threshold("FAILURE")
     }
   }
-  conditionalSteps {
+  conditionalSteps{
             condition {
                 shell('status=\$(curl -o /dev/null -s -w "%{http_code}" 192.168.99.102:30600); if [[ \$status == 200 ]]; then exit 1 ;else exit 0;fi')
             }
             runner('DontRun')
-            steps {
-		    downstreamParameterized {
-  	  	  trigger("job1_pull_repo_build_image")
-    			}
-                  }
+    	    steps{
+      		downstreamParameterized {
+        	trigger('job1_pull_repo_build_image')
+      		}
+      	    }
 	}
+    }
 }
