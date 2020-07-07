@@ -25,7 +25,7 @@ job('job1_pull_repo_build_image') {
                   }
                 cloud("docker")
     
-                tagsString("adamayasharma/-gphp-webserver")
+                tagsString("adamayasharma/php-webserver")
                 pushCredentialsId("3f885629-0783-4229-8808-f2610c781c80")
                 pushOnSuccess(true)
                 cleanImages(false)
@@ -49,7 +49,7 @@ job('job1_pull_repo_build_image') {
                   }
                 cloud("docker")
     
-              tagsString("adamayasharma/-gapache-webserver")
+              tagsString("adamayasharma/httpd-webserver")
               pushCredentialsId("3f885629-0783-4229-8808-f2610c781c80")
               pushOnSuccess(true)
               cleanImages(false)
